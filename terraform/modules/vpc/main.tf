@@ -23,7 +23,7 @@ resource "aws_nat_gateway" "this" {
 }
 
 resource "aws_eip" "this" {
-  vpc = true
+  domain = vpc
 }
 
 resource "aws_subnet" "public" {
