@@ -56,10 +56,6 @@ module "ecs" {
       name          = "api-container"
       image         = "api-app:latest"
       container_port = 80
-    },
-    {
-      name          = "lambda-container"
-      image         = "lambda-app:latest"
     }
   ]
 }
