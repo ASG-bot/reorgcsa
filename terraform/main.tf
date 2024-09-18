@@ -38,10 +38,10 @@ module "security_groups" {
   }
 }
 
-#output "security_group_ids" {
-#  description = "The IDs of the created security groups"
-#  value       = module.security_groups.security_group_ids
-#}
+output "security_group_ids" {
+  description = "The IDs of the created security groups"
+  value       = module.security_groups.security_group_ids
+}
 
 module "ecs" {
   source = "./modules/ecs"
@@ -49,7 +49,7 @@ module "ecs" {
   cluster_name      = "my-ecs-cluster"
   service_name      = "my-ecs-service"
   subnet_ids        = module.vpc.public_subnets
-  security_group_id = module.segurity_groups.security_groups_ids["ecs-sg"]
+  security_group_id = module.security_groups.security_group_ids["ecs-sg"]
 
   container_definitions = [
     {
@@ -58,10 +58,6 @@ module "ecs" {
       container_port = 80
     }
   ]
-}
-
-provider "aws" {
-  region = "us-west-2"
 }
 
 module "s3" {
