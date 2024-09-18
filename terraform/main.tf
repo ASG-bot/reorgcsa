@@ -60,6 +60,17 @@ module "ecs" {
   ]
 }
 
+provider "aws" {
+  region = "us-west-2"
+}
+
+module "s3" {
+  source = "./modules/s3"
+
+  bucket_name = "your-bucket-name"
+  tags = {}
+}
+
 module "lambda" {
   source = "./modules/lambda"
   
