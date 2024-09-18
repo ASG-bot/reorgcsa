@@ -59,3 +59,13 @@ module "ecs" {
     }
   ]
 }
+
+module "lambda" {
+  source = "./modules/lambda"
+  
+  function_name         = "aws-lambda-funtion"
+  handler               = "lambda_funtion.lambda_handler"
+  runtime               = "pyhon3.8"
+  source_filename       = "../aws-lambda/handler.py"
+  s3_bucket_name        = "your-bucket-name"
+}
