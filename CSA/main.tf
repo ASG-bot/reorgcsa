@@ -78,7 +78,7 @@ module "lambda" {
 }
 
 module "ecr" {
-  source = "./module/ecr"
+  source = "./modules/ecr"
 
   repository_names    = ["api", "aws-lambda"]
   image_tag_mutability = "IMMUTABLE"
