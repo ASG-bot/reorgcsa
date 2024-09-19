@@ -76,3 +76,12 @@ module "lambda" {
   source_file    = "./aws-lambda/handler.py"
   s3_bucket_name = "your-bucket-name"
 }
+
+module "ecr_repositories" {
+  source = "./ecr-module"
+
+  repository_names    = ["api", "aws-lambda"]
+  image_tag_mutability = "IMMUTABLE"
+  scan_on_push         = true
+  tags                 = {}
+}
