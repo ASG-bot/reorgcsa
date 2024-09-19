@@ -40,7 +40,7 @@ module "security_groups" {
 
 output "security_group_ids" {
   description = "The IDs of the created security groups"
-  value       = module.security_groups.security_group_ids
+  value       = module.security_groups.security_group_ids["ecs-sg"]
 }
 
 module "ecs" {
@@ -72,8 +72,7 @@ module "lambda" {
 
   function_name = "aws-lambda-funtion"
   handler       = "lambda_funtion.lambda_handler"
-  runtime       = "pyhon3.8"
-  source_file   = "{path.module}/aws-lambda/handler.py"
-  # filename              = "${path.module/modules/lambda/lambda_funtion.zip}"
+  runtime       = "python3.8"
+  source_file   = "./aws-lambda/handler.py"
   s3_bucket_name = "your-bucket-name"
 }
