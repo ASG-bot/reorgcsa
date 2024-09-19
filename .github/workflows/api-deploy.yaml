@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'api/**'
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -32,12 +33,12 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-1
 
-# OIDC conection
-#    - name: Configure AWS credentials using OIDC
-#      uses: aws-actions/configure-aws-credentials@v1
-#      with:
-#        role-to-assume: arn:aws:iam::123456789012:role/your-oidc-role
-#        aws-region: us-west-1
+    # OIDC conection
+    # - name: Configure AWS credentials using OIDC
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     role-to-assume: arn:aws:iam::123456789012:role/your-oidc-role
+    #     aws-region: us-west-1
 
     - name: Log in to Amazon ECR
       id: login-ecr
@@ -59,9 +60,9 @@ jobs:
         AWS_REGION: us-west-1  # Change this to your AWS region if needed
         CLUSTER_NAME: my-ecs-cluster
         SERVICE_NAME: my-ecs-service
-        CONTAINER_NAME: api-container  # Change this to your container name in the task definition
+        CONTAINER_NAME: api-container  
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: api  # Change this to your ECR repository name
+        ECR_REPOSITORY: api  
         IMAGE_TAG: ${{ github.sha }}
       run: |
         aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment \
