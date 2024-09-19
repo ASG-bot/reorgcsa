@@ -70,9 +70,9 @@ module "s3" {
 module "lambda" {
   source = "./modules/lambda"
 
-  function_name = "aws-lambda-funtion"
-  handler       = "lambda_funtion.lambda_handler"
-  runtime       = "python3.8"
-  source_file   = "./aws-lambda/handler.py"
+  function_name  = "aws-lambda-funtion"
+  handler        = "lambda_funtion.lambda_handler"
+  runtime        = "python3.8"
+  source_file    = "./aws-lambda/handler.py"
   s3_bucket_name = "your-bucket-name"
 }
