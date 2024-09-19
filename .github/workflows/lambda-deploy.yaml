@@ -6,6 +6,7 @@ on:
       - main
     paths: 
       - 'aws-lamda/handler.py'
+  workflow_dispatch: 
 
 permissions:
   id-token: write
