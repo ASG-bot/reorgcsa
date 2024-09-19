@@ -48,9 +48,15 @@ resource "aws_iam_role_policy" "lambda_exec_policy" {
   })
 }
 
-resource "local_file" "lambda_zip" {
-  content  = file(var.source_file)
-  filename = "${path.module}/lambda_function.zip"
+#resource "local_file" "lambda_zip" {
+#  content  = file(var.source_file)
+#  filename = "${path.module}/lambda_function.zip"
+#}
+
+data "archive_file" "lambda_zip" {
+  type        = "zip"
+  source_file = var.source_file
+  output_path = "${path.module}/lambda_function.zip"
 }
 
 resource "aws_lambda_function" "this" {
@@ -58,9 +64,11 @@ resource "aws_lambda_function" "this" {
   handler       = var.handler
   runtime       = var.runtime
   role          = aws_iam_role.lambda_exec.arn
-  filename      = local_file.lambda_zip.filename
-
-  source_code_hash = filebase64sha256(local_file.lambda_zip.filename)
+  filename      = data.archive_file.lambda_zip.output_path
+ 
+ # source_code_hash = filebase64sha256(local_file.lambda_zip.filename)
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch" {
@@ -68,4 +76,5 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.this.function_name
   principal     = "events.amazonaws.com"
+
 }
