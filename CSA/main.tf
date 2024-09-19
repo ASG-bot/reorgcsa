@@ -77,8 +77,8 @@ module "lambda" {
   s3_bucket_name = "your-bucket-name"
 }
 
-module "ecr_repositories" {
-  source = "./ecr-module"
+module "ecr" {
+  source = "./module/ecr"
 
   repository_names    = ["api", "aws-lambda"]
   image_tag_mutability = "IMMUTABLE"
